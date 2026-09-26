@@ -81,19 +81,20 @@ previous.filter((workoutId) => workoutId !== id)
 return ( <main className="min-h-screen bg-black px-5 py-10 text-white lg:px-8 lg:py-14"> <div className="mx-auto max-w-7xl">
 
 
-   
+    {/* Header */}
     <div className="max-w-2xl">
       <h1 className="text-4xl font-black uppercase tracking-tight md:text-5xl">
         MY PLAN
       </h1>
 
       <p className="mt-4 text-sm leading-6 text-white/55 md:text-base">
-        Build your workout plan and keep track of your progress.
+        Cap of five lifts for today. Finish them, then load more.
       </p>
     </div>
 
     
     <div className="mt-10 grid gap-4 sm:grid-cols-3">
+      
       <div className="rounded-2xl border border-white/10 bg-[#15171D] p-5">
         <div className="flex items-center justify-between">
           <p className="text-xs font-bold uppercase tracking-wider text-white/40">
@@ -107,9 +108,12 @@ return ( <main className="min-h-screen bg-black px-5 py-10 text-white lg:px-8 lg
           />
         </div>
 
-        <p className="mt-4 text-3xl font-black">{plan.length}</p>
+        <p className="mt-4 text-3xl font-black">
+          {plan.length}
+        </p>
       </div>
 
+      
       <div className="rounded-2xl border border-white/10 bg-[#15171D] p-5">
         <div className="flex items-center justify-between">
           <p className="text-xs font-bold uppercase tracking-wider text-white/40">
@@ -123,9 +127,12 @@ return ( <main className="min-h-screen bg-black px-5 py-10 text-white lg:px-8 lg
           />
         </div>
 
-        <p className="mt-4 text-3xl font-black">{totalMinutes}</p>
+        <p className="mt-4 text-3xl font-black">
+          {totalMinutes}
+        </p>
       </div>
 
+      
       <div className="rounded-2xl border border-white/10 bg-[#15171D] p-5">
         <div className="flex items-center justify-between">
           <p className="text-xs font-bold uppercase tracking-wider text-white/40">
@@ -139,7 +146,9 @@ return ( <main className="min-h-screen bg-black px-5 py-10 text-white lg:px-8 lg
           />
         </div>
 
-        <p className="mt-4 text-3xl font-black">{totalCalories}</p>
+        <p className="mt-4 text-3xl font-black">
+          {totalCalories}
+        </p>
       </div>
     </div>
 
@@ -258,10 +267,9 @@ return ( <main className="min-h-screen bg-black px-5 py-10 text-white lg:px-8 lg
                     </span>
                   </div>
 
-                  
+                 
                   <div className="flex min-w-0 flex-1 flex-col justify-between p-5 md:p-6">
 
-                    
                     <div>
                       <div className="flex items-start justify-between gap-4">
                         <div>
@@ -302,7 +310,7 @@ return ( <main className="min-h-screen bg-black px-5 py-10 text-white lg:px-8 lg
                         </button>
                       </div>
 
-                      
+                      {/* Stats */}
                       <div className="mt-6 grid grid-cols-3 border-y border-white/10 py-4">
 
                         <div className="flex items-center gap-3">
@@ -357,24 +365,32 @@ return ( <main className="min-h-screen bg-black px-5 py-10 text-white lg:px-8 lg
                       </div>
                     </div>
 
-                   
-                    <div className="mt-5 grid grid-cols-2 gap-3"> 
-                      <Link href={`/workouts/${workout.id}`}
-                       className="flex min-w-0 items-center justify-center
-                        rounded-full border border-white/20 px-4 py-3 text-xs 
-                        font-black uppercase tracking-wide text-white transition
-                         hover:border-[#ccff00] hover:text-[#ccff00]" > 
-                         View Details 
-                         </Link> 
-                         {activeTab === "plan" && ( <button type="button" onClick={
-                          () => handleDone(workout.id)} 
-                          className={`flex min-w-0 items-center justify-center 
-                          gap-2 rounded-full px-4 py-3 text-xs font-black uppercase 
-                          tracking-wide transition ${ isDone ? "bg-[#ccff00] text-black" :
-                           "border border-[#ccff00] text-[#ccff00] hover:bg-[#ccff00] hover:text-black" }`} 
-                           > <Check size={16} strokeWidth={3} /> 
-                           <span>{isDone ? "Done" : "Mark as Done"}</span> </button> )} 
-                           </div>
+                    {/* Actions */}
+                    <div className="mt-5 grid grid-cols-2 gap-3">
+                      <Link
+                        href={`/workouts/${workout.id}`}
+                        className="flex min-w-0 items-center justify-center rounded-full border border-white/20 px-4 py-3 text-xs font-black uppercase tracking-wide text-white transition hover:border-[#ccff00] hover:text-[#ccff00]"
+                      >
+                        View Details
+                      </Link>
+
+                      {activeTab === "plan" && (
+                        <button
+                          type="button"
+                          onClick={() => handleDone(workout.id)}
+                          className={`flex min-w-0 items-center justify-center gap-2 rounded-full px-4 py-3 text-xs font-black uppercase tracking-wide transition ${
+                            isDone
+                              ? "bg-[#ccff00] text-black"
+                              : "border border-[#ccff00] text-[#ccff00] hover:bg-[#ccff00] hover:text-black"
+                          }`}
+                        >
+                          <Check size={16} strokeWidth={3} />
+                          <span>
+                            {isDone ? "Done" : "Mark as Done"}
+                          </span>
+                        </button>
+                      )}
+                    </div>
 
                   </div>
                 </div>
