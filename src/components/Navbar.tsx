@@ -38,7 +38,7 @@ export default function Navbar() {
           </span>
         </Link>
 
-        {/* Navigation */}
+        
         <div className="hidden items-center gap-8 md:flex">
           <Link
             href="/"
@@ -63,7 +63,7 @@ export default function Navbar() {
           </Link>
         </div>
 
-        {/* Counters */}
+        
         <div className="flex items-center gap-2">
           <Link
             href="/my-plan"

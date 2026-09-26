@@ -26,7 +26,7 @@ export default function WorkoutCard({ workout }: WorkoutCardProps) {
       href={`/workouts/${workout.id}`}
       className="group overflow-hidden rounded-2xl border border-white/10 bg-[#15171D] transition duration-300 hover:-translate-y-1 hover:border-[#ccff00]/40"
     >
-      {/* Image */}
+     
       <div className="relative h-56 overflow-hidden">
         <Image
           src={workout.image}
@@ -35,15 +35,15 @@ export default function WorkoutCard({ workout }: WorkoutCardProps) {
           className="object-cover transition duration-500 group-hover:scale-105"
         />
 
-        {/* Difficulty */}
+        
         <span className="absolute right-4 top-4 rounded-full bg-black/70 px-3 py-1 text-xs font-bold uppercase tracking-wide text-white backdrop-blur-sm">
           {workout.difficulty}
         </span>
       </div>
 
-      {/* Content */}
+     
       <div className="p-5">
-        {/* Muscle Groups */}
+       
         <div className="mb-3 flex flex-wrap gap-2">
           {workout.muscleGroups.map((muscle) => (
             <span
@@ -55,12 +55,12 @@ export default function WorkoutCard({ workout }: WorkoutCardProps) {
           ))}
         </div>
 
-        {/* Name */}
+      
         <h3 className="text-xl font-black uppercase tracking-tight text-white">
           {workout.name}
         </h3>
 
-        {/* Details */}
+       
         <div className="mt-5 flex items-center justify-between border-t border-white/10 pt-4 text-xs font-semibold uppercase tracking-wide text-white/50">
           <span>{workout.duration} min</span>
           <span>{workout.sets} sets</span>
