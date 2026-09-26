@@ -28,7 +28,7 @@ export default function Navbar() {
     <header className="border-b border-white/10 bg-[#111111]">
       <nav className="mx-auto flex min-h-20 max-w-7xl items-center justify-between px-5 py-4 lg:px-8">
 
-        {/* Logo */}
+       
         <Link
           href="/"
           className="flex items-center gap-3"
@@ -47,9 +47,8 @@ export default function Navbar() {
           </span>
         </Link>
 
-        {/* Main Navigation */}
+        
         <div className="hidden items-center gap-8 md:flex">
-
           <Link
             href="/"
             className={`text-sm font-bold tracking-wider transition ${
@@ -71,19 +70,18 @@ export default function Navbar() {
           >
             My Plan
           </Link>
-
         </div>
 
-        {/* Plan / Saved */}
+        
         <div className="flex items-center gap-2">
 
-          {/* Plan Button */}
+         
           <Link
             href="/my-plan?tab=plan"
             className={`flex items-center gap-2 rounded-full px-3 py-2 text-xs font-black tracking-wide transition ${
               isPlanActive
                 ? "bg-[#ccff00] text-black"
-                : "bg-[#ccff00] text-black"
+                : "border border-white/30 bg-transparent text-white hover:border-[#ccff00] hover:text-[#ccff00]"
             }`}
           >
             <ClipboardList
@@ -96,12 +94,12 @@ export default function Navbar() {
             <span>{plan.length}</span>
           </Link>
 
-          {/* Saved Button */}
+        
           <Link
             href="/my-plan?tab=saved"
             className={`flex items-center gap-2 rounded-full px-3 py-2 text-xs font-black uppercase tracking-wide transition ${
               isSavedActive
-                ? "border border-[#ccff00] bg-[#ccff00] text-black"
+                ? "bg-[#ccff00] text-black"
                 : "border border-white/30 bg-transparent text-white hover:border-[#ccff00] hover:text-[#ccff00]"
             }`}
           >

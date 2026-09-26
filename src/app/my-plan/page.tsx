@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import {
   Bookmark,
   Check,
@@ -9,7 +10,7 @@ import {
   Flame,
   Trash2,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useFitLog } from "@/context/FitLogContext";
 
 interface Workout {
@@ -28,9 +29,9 @@ interface Workout {
   instructions: string[];
 }
 
-type Tab = "plan" | "saved";
-
 export default function MyPlan() {
+  const searchParams = useSearchParams();
+
   const {
     plan,
     saved,
@@ -39,20 +40,18 @@ export default function MyPlan() {
     removeAllFromPlan,
   } = useFitLog();
 
-  const [activeTab, setActiveTab] = useState<Tab>("plan");
   const [completed, setCompleted] = useState<number[]>([]);
 
-  
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const tab = params.get("tab");
-
-    if (tab === "saved") {
-      setActiveTab("saved");
-    } else {
-      setActiveTab("plan");
-    }
-  }, []);
+  /*
+   * Read the current tab directly from the URL.
+   *
+   * /my-plan?tab=plan  -> Today's Plan
+   * /my-plan?tab=saved -> Saved
+   */
+  const activeTab =
+    searchParams.get("tab") === "saved"
+      ? "saved"
+      : "plan";
 
   const handleComplete = (id: number) => {
     setCompleted((previous) =>
@@ -79,7 +78,7 @@ export default function MyPlan() {
     <main className="min-h-screen bg-black px-5 py-10 text-white lg:px-8 lg:py-14">
       <div className="mx-auto max-w-7xl">
 
-      
+        {/* Header */}
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <div>
             <p className="mb-3 text-xs font-black uppercase tracking-[0.2em] text-[#ccff00]">
@@ -107,7 +106,7 @@ export default function MyPlan() {
           )}
         </div>
 
-       
+        {/* Metrics */}
         <div className="mt-8 grid gap-4 sm:grid-cols-3">
           <div className="rounded-2xl border border-white/10 bg-[#15171D] p-5">
             <p className="text-xs font-bold uppercase tracking-wider text-white/40">
@@ -140,12 +139,11 @@ export default function MyPlan() {
           </div>
         </div>
 
-      
+        {/* Tabs */}
         <div className="mt-10 flex items-center gap-8 border-b border-white/10">
 
           <Link
             href="/my-plan?tab=plan"
-            onClick={() => setActiveTab("plan")}
             className={`relative pb-4 text-sm font-black uppercase tracking-wide transition ${
               activeTab === "plan"
                 ? "text-[#ccff00]"
@@ -161,7 +159,6 @@ export default function MyPlan() {
 
           <Link
             href="/my-plan?tab=saved"
-            onClick={() => setActiveTab("saved")}
             className={`relative flex items-center gap-2 pb-4 text-sm font-black uppercase tracking-wide transition ${
               activeTab === "saved"
                 ? "text-[#ccff00]"
@@ -185,9 +182,10 @@ export default function MyPlan() {
 
         </div>
 
-        
+        {/* Empty State */}
         {displayedWorkouts.length === 0 ? (
           <div className="mt-10 rounded-2xl border border-white/10 bg-[#15171D] px-6 py-16 text-center">
+
             <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-white/5">
               <Bookmark
                 size={24}
@@ -213,11 +211,13 @@ export default function MyPlan() {
             >
               Browse Workouts
             </Link>
+
           </div>
         ) : (
 
-         
+          /* Workout Cards */
           <div className="mt-8 grid gap-5">
+
             {displayedWorkouts.map((workout: Workout) => {
               const isCompleted = completed.includes(workout.id);
 
@@ -230,6 +230,7 @@ export default function MyPlan() {
                       : "border-white/10"
                   }`}
                 >
+
                   <div className="flex flex-col md:flex-row">
 
                     {/* Image */}
@@ -261,6 +262,7 @@ export default function MyPlan() {
                     <div className="flex flex-1 flex-col p-5 md:p-6">
 
                       <div className="flex flex-col justify-between gap-4 sm:flex-row">
+
                         <div>
                           <div className="mb-3 flex flex-wrap gap-2">
                             {workout.muscleGroups.map(
@@ -293,10 +295,12 @@ export default function MyPlan() {
                         <span className="h-fit w-fit rounded-full bg-black/50 px-3 py-1 text-xs font-bold uppercase tracking-wide text-white/60">
                           {workout.difficulty}
                         </span>
+
                       </div>
 
                       {/* Stats */}
                       <div className="mt-6 flex flex-wrap gap-x-6 gap-y-3 border-t border-white/10 pt-4 text-xs font-semibold uppercase tracking-wide text-white/50">
+
                         <span className="flex items-center gap-1.5">
                           <Clock3
                             size={15}
@@ -316,10 +320,12 @@ export default function MyPlan() {
                         <span>
                           {workout.sets} sets × {workout.reps}
                         </span>
+
                       </div>
 
                       {/* Buttons */}
                       <div className="mt-6 grid gap-3 sm:grid-cols-2">
+
                         <Link
                           href={`/workouts/${workout.id}`}
                           className="inline-flex items-center justify-center rounded-full border border-white/20 px-5 py-3 text-xs font-black uppercase tracking-wide text-white transition hover:border-[#ccff00] hover:text-[#ccff00]"
@@ -362,9 +368,10 @@ export default function MyPlan() {
                             Remove Saved
                           </button>
                         )}
+
                       </div>
 
-                      
+                      {/* Remove from Plan */}
                       {activeTab === "plan" && (
                         <button
                           type="button"
@@ -376,13 +383,16 @@ export default function MyPlan() {
                           Remove from plan
                         </button>
                       )}
+
                     </div>
                   </div>
                 </article>
               );
             })}
+
           </div>
         )}
+
       </div>
     </main>
   );
