@@ -1,23 +1,41 @@
+import Hero from "@/components/Hero";
+import WorkoutCard from "@/components/WorkoutCard";
 import { getWorkouts } from "@/lib/api";
 
 export default async function Home() {
   const workouts = await getWorkouts();
 
   return (
-    <main className="p-10">
-      <h1 className="text-3xl font-bold">FitLog</h1>
+    <main className="bg-[#000000]">
+      {/* Hero */}
+      <Hero />
 
-      <p className="mt-4">
-        Total workouts: {workouts.length}
-      </p>
+      {/* Workout Library */}
+      <section
+        id="workouts"
+        className="mx-auto max-w-7xl px-5 py-16 lg:px-8"
+      >
+        <div className="mb-10">
+          <h2 className="text-3xl font-black uppercase tracking-tight text-white md:text-4xl">
+            THE LIBRARY
+          </h2>
 
-      <div className="mt-6 space-y-2">
-        {workouts.map((workout) => (
-          <p key={workout.id}>
-            {workout.id}. {workout.name}
+          <p className="mt-3 max-w-xl text-white/60">
+            Twelve lifts covering every major muscle group.
           </p>
-        ))}
-      </div>
+        </div>
+
+        {/* Workout Cards */}
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {workouts.map((workout) => (
+            <WorkoutCard
+              key={workout.id}
+              workout={workout}
+            />
+          ))}
+        </div>
+      </section>
     </main>
   );
 }
+
