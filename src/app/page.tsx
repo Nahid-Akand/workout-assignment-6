@@ -1,5 +1,6 @@
 import Hero from "@/components/Hero";
 import WorkoutCard from "@/components/WorkoutCard";
+import WorkoutLibrary from "@/components/WorkoutLibrary";
 import { getWorkouts } from "@/lib/api";
 
 export default async function Home() {
@@ -21,7 +22,9 @@ return ( <main className="bg-[#000000]"> <Hero />
         Twelve lifts covering every major muscle group.
       </p>
     </div>
-
+      <div>
+        <WorkoutLibrary workouts={workouts} />
+      </div>
     <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
       {workouts.map((workout) => (
         <WorkoutCard key={workout.id} workout={workout} />

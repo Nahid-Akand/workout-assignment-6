@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import "./globals.css";
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { FitLogProvider } from "@/context/FitLogContext";
-import "./globals.css";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const metadata: Metadata = {
   title: "FitLog",
-  description: "Your workout companion",
+  description: "Workout Library",
 };
 
 export default function RootLayout({
@@ -18,14 +18,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className="min-h-screen bg-black text-white">
+    <html lang="en"><body className="min-h-screen bg-black">
         <FitLogProvider>
-          <Navbar />
-
-          <main className="flex-1">{children}</main>
-
-          <Footer />
+          <div className="flex min-h-screen flex-col">
+            <Navbar />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </div>
 
           <ToastContainer
             position="bottom-right"
@@ -36,8 +35,7 @@ export default function RootLayout({
             pauseOnHover
           />
         </FitLogProvider>
-      </body>
-    </html>
+      </body></html>
   );
 }
 
