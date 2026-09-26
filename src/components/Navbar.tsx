@@ -1,121 +1,93 @@
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
-import { ClipboardList, Bookmark } from "lucide-react";
-import { usePathname, useSearchParams } from "next/navigation";
+import Link from "next/link";
+import { Bookmark, ClipboardList } from "lucide-react";
+import { usePathname } from "next/navigation";
 import { useFitLog } from "@/context/FitLogContext";
 import logo from "@/assets/logo.png";
 
 export default function Navbar() {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+const pathname = usePathname();
 
-  const { plan, saved } = useFitLog();
+const { plan, saved } = useFitLog();
 
-  const currentTab = searchParams.get("tab");
+const isWorkoutActive = pathname === "/";
+const isPlanPage = pathname === "/my-plan";
 
-  const isWorkoutActive = pathname === "/";
-  const isPlanPage = pathname === "/my-plan";
+return ( <header className="border-b border-white/10 bg-[#111111]"> <nav className="mx-auto flex min-h-20 max-w-7xl items-center justify-between px-5 py-4 lg:px-8">
+       <Link href="/" className="flex items-center gap-3"> <Image
+         src={logo}
+         alt="FitLog logo"
+         width={38}
+         height={38}
+         priority
+         className="h-9 w-9 object-contain"
+       />
 
-  const isPlanActive =
-    isPlanPage && currentTab !== "saved";
 
-  const isSavedActive =
-    isPlanPage && currentTab === "saved";
+      <span className="text-xl font-black tracking-tight text-white">
+        FITLOG
+      </span>
+    </Link>
 
-  return (
-    <header className="border-b border-white/10 bg-[#111111]">
-      <nav className="mx-auto flex min-h-20 max-w-7xl items-center justify-between px-5 py-4 lg:px-8">
+    <div className="hidden items-center gap-8 md:flex">
+      <Link
+        href="/"
+        className={`text-sm font-bold tracking-wider transition ${
+          isWorkoutActive
+            ? "text-[#ccff00]"
+            : "text-white/60 hover:text-white"
+        }`}
+      >
+        Workouts
+      </Link>
 
-       
-        <Link
-          href="/"
-          className="flex items-center gap-3"
-        >
-          <Image
-            src={logo}
-            alt="FitLog logo"
-            width={38}
-            height={38}
-            priority
-            className="h-9 w-9 object-contain"
-          />
+      <Link
+        href="/my-plan?tab=plan"
+        className={`text-sm font-bold tracking-wider transition ${
+          isPlanPage
+            ? "text-[#ccff00]"
+            : "text-white/60 hover:text-white"
+        }`}
+      >
+        My Plan
+      </Link>
+    </div>
 
-          <span className="text-xl font-black tracking-tight text-white">
-            FITLOG
-          </span>
-        </Link>
+    {/* Plan / Saved */}
+    <div className="flex items-center gap-2">
+      <Link
+        href="/my-plan?tab=plan"
+        className={`flex items-center gap-2 rounded-full px-3 py-2 text-xs font-black tracking-wide transition ${
+          isPlanPage
+            ? "bg-[#ccff00] text-black"
+            : "border border-white/30 bg-transparent text-white hover:border-[#ccff00] hover:text-[#ccff00]"
+        }`}
+      >
+        <ClipboardList size={15} strokeWidth={2.5} />
 
-        
-        <div className="hidden items-center gap-8 md:flex">
-          <Link
-            href="/"
-            className={`text-sm font-bold tracking-wider transition ${
-              isWorkoutActive
-                ? "text-[#ccff00]"
-                : "text-white/60 hover:text-white"
-            }`}
-          >
-            Workouts
-          </Link>
+        <span>Plan</span>
 
-          <Link
-            href="/my-plan?tab=plan"
-            className={`text-sm font-bold tracking-wider transition ${
-              isPlanPage
-                ? "text-[#ccff00]"
-                : "text-white/60 hover:text-white"
-            }`}
-          >
-            My Plan
-          </Link>
-        </div>
+        <span>{plan.length}</span>
+      </Link>
 
-        
-        <div className="flex items-center gap-2">
+      <Link
+        href="/my-plan?tab=saved"
+        className={`flex items-center gap-2 rounded-full border border-white/30 bg-transparent px-3 py-2 text-xs font-black uppercase tracking-wide text-white transition hover:border-[#ccff00] hover:text-[#ccff00] ${
+          isPlanPage ? "" : ""
+        }`}
+      >
+        <Bookmark size={15} strokeWidth={2.5} />
 
-         
-          <Link
-            href="/my-plan?tab=plan"
-            className={`flex items-center gap-2 rounded-full px-3 py-2 text-xs font-black tracking-wide transition ${
-              isPlanActive
-                ? "bg-[#ccff00] text-black"
-                : "border border-white/30 bg-transparent text-white hover:border-[#ccff00] hover:text-[#ccff00]"
-            }`}
-          >
-            <ClipboardList
-              size={15}
-              strokeWidth={2.5}
-            />
+        <span>Saved</span>
 
-            <span>Plan</span>
+        <span>{saved.length}</span>
+      </Link>
+    </div>
+  </nav>
+</header>
 
-            <span>{plan.length}</span>
-          </Link>
 
-        
-          <Link
-            href="/my-plan?tab=saved"
-            className={`flex items-center gap-2 rounded-full px-3 py-2 text-xs font-black uppercase tracking-wide transition ${
-              isSavedActive
-                ? "bg-[#ccff00] text-black"
-                : "border border-white/30 bg-transparent text-white hover:border-[#ccff00] hover:text-[#ccff00]"
-            }`}
-          >
-            <Bookmark
-              size={15}
-              strokeWidth={2.5}
-            />
-
-            <span>Saved</span>
-
-            <span>{saved.length}</span>
-          </Link>
-
-        </div>
-      </nav>
-    </header>
-  );
+);
 }
-
